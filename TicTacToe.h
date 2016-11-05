@@ -8,25 +8,40 @@
 #ifndef TICTACTOE_H_
 #define TICTACTOE_H_
 
-enum Player { X,O,Z };
-enum XO {X,O,z};
+//these represent both players and board-pieces
+//============================================================================
+// Name        : TicTacToe.cpp
+// Author      : Jacob Shnaidman
+// Version     :
+// Copyright   : Steal this as much as you want
+// Description : Hello World in C++, Ansi-style
+//============================================================================
 
-struct TicTacToe{
+#include <iostream>
+#include <string>
+#include <vector>
+using namespace std;
+
+
+
+class TicTacToe{
+
 public:
-	TicTacToe(): playerX(X), playerO(O) {
-		for (int i = 0; i<3;i++){
-			for(int j=0;j<3;j++){
-				board[i][j] = z;
-			}
-		}
-	}
+	enum XO {
+		O=79,
+		X=88,
+		z = 90};
+	TicTacToe();
+	TicTacToe::XO playGame();
 
 private:
-		Player playerX;
-		Player playerO;
-		XO board[3][3];
+	XO playerOne;
+	XO playerTwo;
+	XO board[3][3];
+	void printBoard();
+	void place(XO player, vector<int> pos);
+	XO winner();
+	vector<int> receiveInputPosition();
+	XO pickSymbol();
 };
-
-void place(Player player, int pos, TicTacToe game);
-
 #endif /* TICTACTOE_H_ */
