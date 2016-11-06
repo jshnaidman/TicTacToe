@@ -33,14 +33,13 @@ public:
 		z = 90};
 	TicTacToe();
 	TicTacToe::XO playGame();
-
+	XO** board;
+	static XO winner(XO** board);
 private:
 	XO playerOne;
 	XO playerTwo;
-	XO board[3][3];
 	void printBoard();
 	void place(XO player, vector<int> pos);
-	XO winner();
 	vector<int> receiveInputPosition();
 	XO pickSymbol();
 };
