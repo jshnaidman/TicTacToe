@@ -12,7 +12,6 @@
 
 
 TicTacToe::TicTacToe(): playerOne(TicTacToe::z), playerTwo(TicTacToe::z) {
-	board = new XO*[3];
 	for (int i = 0; i<3;i++){
 		for(int j=0;j<3;j++){
 			this->board[i][j] = TicTacToe::z;
@@ -31,7 +30,7 @@ void TicTacToe:: place(XO player, vector<int> pos){
 
 //evalautes who won the game, X or O.
 //if nobody has won, then z is returned.
-TicTacToe::XO TicTacToe::winner(XO** board){
+TicTacToe::XO TicTacToe::winner(){
 	//if diagonals are thought of as a linear equations on a graph,
 	//pDiagonalCount looks like a diagonal with a positive slope
 	//nDiagonalCount looks like a diagonal with a negative slope
@@ -43,35 +42,35 @@ TicTacToe::XO TicTacToe::winner(XO** board){
 		//each iteration of i will scan a new row and column simultaneously
 		//if two adjacent spots in a column or a row are the same and not empty (equal to z)
 		// then add one to the count of horizontal/vertical matches
-		XO tempHorizontal = board[i][0];
-		XO tempVertical = board[0][i];
+		XO tempHorizontal = this->board[i][0];
+		XO tempVertical = this->board[0][i];
 		for(int j=1;j<3;j++){
-			if(board[i][j] == tempHorizontal && board[i][j] != z){
+			if(this->board[i][j] == tempHorizontal && this->board[i][j] != z){
 				horizontalCount++;
 			}
-			if (board[j][i] == tempVertical && board[j][i] != z){
+			if (this->board[j][i] == tempVertical && this->board[j][i] != z){
 				verticalCount++;
 			}
 		}
 		//if more than two comparisons come back true, then someone has three in a row and has won
 		// returns the winner, or z if there is no winner
 		if (horizontalCount == 2){
-			return board[i][0];
+			return this->board[i][0];
 		}
 		if (verticalCount == 2){
-			return board[0][i];
+			return this->board[0][i];
 		}
 		//checks both diagonals for matches
-		if(board[i][2-i] == board[0][2] && board[i][2-i] != z){
+		if(this->board[i][2-i] == this->board[0][2] && this->board[i][2-i] != z){
 			pDiagonalCount++;
 		}
-		if(board[2-i][i] == board[2][0] && board[2-i][i] != z){
+		if(this->board[2-i][i] == this->board[2][0] && this->board[2-i][i] != z){
 			nDiagonalCount++;
 		}
 	}
 	//if there are more than 3 matches, return the winner
 	if(nDiagonalCount == 3 || pDiagonalCount ==3){
-		return board[1][1];
+		return this->board[1][1];
 	}
 	return z;
 }
@@ -148,7 +147,7 @@ TicTacToe::XO TicTacToe::playGame(){
 			this->place(playerTwo,receiveInputPosition());
 		}
 		//returns enum XO of player that won, or z if no winner
-		winner = TicTacToe::winner(board);
+		winner = TicTacToe::winner();
 		if(winner != TicTacToe::z){
 			printBoard();
 			cout<< "Player " << (char) winner<< " has won!";
@@ -157,4 +156,3 @@ TicTacToe::XO TicTacToe::playGame(){
 	}
 	return winner;
 }
-

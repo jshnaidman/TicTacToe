@@ -8,10 +8,6 @@
 #ifndef PLAYGAMES_H_
 #define PLAYGAMES_H_
 
-
-
-#include "TicTacToe.h"
-
 class PlayGames {
 public:
 	PlayGames();
