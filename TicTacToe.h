@@ -30,14 +30,21 @@ class TicTacToe{
 
 public:
 	TicTacToe();
+<<<<<<< HEAD
 	XO playGame();
 	vector< vector<XO> > board;
 	XO winner(vector<vector <XO> > board);
+=======
+	TicTacToe::XO playGame();
+
+>>>>>>> parent of 83ebe4a... Small Changes
 private:
 	XO playerOne;
 	XO playerTwo;
+	XO board[3][3];
 	void printBoard();
 	void place(XO player, vector<int> pos);
+	XO winner();
 	vector<int> receiveInputPosition();
 	XO pickSymbol();
 };
