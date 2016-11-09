@@ -8,7 +8,6 @@
 #ifndef TICTACTOE_H_
 #define TICTACTOE_H_
 
-//these represent both players and board-pieces
 //============================================================================
 // Name        : TicTacToe.cpp
 // Author      : Jacob Shnaidman
@@ -22,19 +21,18 @@
 #include <vector>
 using namespace std;
 
-
+enum XO {
+	O=79,
+	X=88,
+	z = 90};
 
 class TicTacToe{
 
 public:
-	enum XO {
-		O=79,
-		X=88,
-		z = 90};
 	TicTacToe();
-	TicTacToe::XO playGame();
-	XO** board;
-	static XO winner(XO** board);
+	XO playGame();
+	vector< vector<XO> > board;
+	XO winner(vector<vector <XO> > board);
 private:
 	XO playerOne;
 	XO playerTwo;

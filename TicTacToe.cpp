@@ -11,18 +11,17 @@
 
 
 
-TicTacToe::TicTacToe(): playerOne(TicTacToe::z), playerTwo(TicTacToe::z) {
-	board = new XO*[3];
+TicTacToe::TicTacToe(): playerOne(XO::z), playerTwo(XO::z) {
 	for (int i = 0; i<3;i++){
 		for(int j=0;j<3;j++){
-			this->board[i][j] = TicTacToe::z;
+			this->board[i][j] = XO::z;
 		}
 	}
 }
 
 //place X or O on board
-void TicTacToe:: place(XO player, vector<int> pos){
-	if(this->board[pos[0]][pos[1]] != TicTacToe::z){
+void TicTacToe::place(XO player, vector<int> pos){
+	if(this->board[pos[0]][pos[1]] != XO::z){
 		cout << "\n Place taken, try again";
 		this->place(player,pos);
 	}
@@ -31,7 +30,7 @@ void TicTacToe:: place(XO player, vector<int> pos){
 
 //evalautes who won the game, X or O.
 //if nobody has won, then z is returned.
-TicTacToe::XO TicTacToe::winner(XO** board){
+XO TicTacToe::winner(vector< vector<XO> > board){
 	//if diagonals are thought of as a linear equations on a graph,
 	//pDiagonalCount looks like a diagonal with a positive slope
 	//nDiagonalCount looks like a diagonal with a negative slope
@@ -46,10 +45,10 @@ TicTacToe::XO TicTacToe::winner(XO** board){
 		XO tempHorizontal = board[i][0];
 		XO tempVertical = board[0][i];
 		for(int j=1;j<3;j++){
-			if(board[i][j] == tempHorizontal && board[i][j] != z){
+			if(board[i][j] == tempHorizontal && board[i][j] != XO::z){
 				horizontalCount++;
 			}
-			if (board[j][i] == tempVertical && board[j][i] != z){
+			if (board[j][i] == tempVertical && board[j][i] != XO::z){
 				verticalCount++;
 			}
 		}
@@ -62,10 +61,10 @@ TicTacToe::XO TicTacToe::winner(XO** board){
 			return board[0][i];
 		}
 		//checks both diagonals for matches
-		if(board[i][2-i] == board[0][2] && board[i][2-i] != z){
+		if(board[i][2-i] == board[0][2] && board[i][2-i] != XO::z){
 			pDiagonalCount++;
 		}
-		if(board[2-i][i] == board[2][0] && board[2-i][i] != z){
+		if(board[2-i][i] == board[2][0] && board[2-i][i] != XO::z){
 			nDiagonalCount++;
 		}
 	}
@@ -73,7 +72,7 @@ TicTacToe::XO TicTacToe::winner(XO** board){
 	if(nDiagonalCount == 3 || pDiagonalCount ==3){
 		return board[1][1];
 	}
-	return z;
+	return XO::z;
 }
 
 vector<int> TicTacToe::receiveInputPosition(){
@@ -100,7 +99,7 @@ vector<int> TicTacToe::receiveInputPosition(){
 	return pos;
 }
 
-TicTacToe::XO TicTacToe::pickSymbol(){
+XO TicTacToe::pickSymbol(){
 	string playerOneSymbol;
 	cout<< "Player one, choose X or O \n";
 	cin>> playerOneSymbol;
@@ -108,15 +107,16 @@ TicTacToe::XO TicTacToe::pickSymbol(){
 		cout << "Symbol must be X or O and input must not be longer than one character";
 	}
 	int rawCharChosen = playerOneSymbol.at(0);
+	//if it's not X or O lower/upper case
 	if(rawCharChosen != 120 && rawCharChosen != 111 &&
 			rawCharChosen != 88 && rawCharChosen != 79){
 		cout << "Invalid character chosen, pick again";
 		return pickSymbol();
 	}
 	if(rawCharChosen == 120 || rawCharChosen == 88){
-		return TicTacToe::X;
+		return XO::X;
 	}
-	else return TicTacToe::O;
+	else return XO::O;
 }
 
 void TicTacToe::printBoard(){
@@ -130,13 +130,15 @@ void TicTacToe::printBoard(){
 }
 
 //playerOne goes first
-TicTacToe::XO TicTacToe::playGame(){
-	XO winner = TicTacToe::z; //z is used as default enum value
+XO TicTacToe::playGame(){
+	XO winningPlayer = XO::z; //z is used as default enum value
+	//player one picks X or O
 	playerOne=this->pickSymbol();
-	if(playerOne == TicTacToe::X){
-		playerTwo = TicTacToe::O;
+	if(playerOne == XO::X){
+		playerTwo = XO::O;
 	}
-	else playerTwo = TicTacToe::X;
+	else playerTwo = XO::X;
+	//play 9 turns
 	for(int turn = 1; turn<=9; turn++){
 		this->printBoard();
 		if(turn%2 == 1){
@@ -148,13 +150,13 @@ TicTacToe::XO TicTacToe::playGame(){
 			this->place(playerTwo,receiveInputPosition());
 		}
 		//returns enum XO of player that won, or z if no winner
-		winner = TicTacToe::winner(board);
-		if(winner != TicTacToe::z){
+		winningPlayer = this->winner(board);
+		if(winningPlayer != XO::z){
 			printBoard();
-			cout<< "Player " << (char) winner<< " has won!";
-			return winner;
+			cout<< "Player " << (char) winningPlayer<< " has won!";
+			return winningPlayer;
 		}
 	}
-	return winner;
+	return winningPlayer;
 }
 
