@@ -10,7 +10,7 @@
 int utility(TicTacToe game,XO player){
 	XO winningPlayer;
 	winningPlayer = game.winner(game.board);
-	if (winningPlayer == XO::z){
+	if (winningPlayer == z){
 		return 0;
 	}
 	else if (winningPlayer == player){
