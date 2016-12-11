@@ -7,10 +7,10 @@
 
 #include "MiniMax.h"
 
-int utility(TicTacToe game,XO player){
-	XO winningPlayer;
+int utility(TicTacToe game,TicTacToe::XO player){
+	TicTacToe::XO winningPlayer;
 	winningPlayer = game.winner(game.board);
-	if (winningPlayer == XO::z){
+	if (winningPlayer == TicTacToe::XO::z){
 		return 0;
 	}
 	else if (winningPlayer == player){

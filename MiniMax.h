@@ -9,6 +9,6 @@
 #define MINIMAX_H_
 #include "TicTacToe.h"
 
-int utility(XO** state,XO player);
+int utility(TicTacToe::XO** state,TicTacToe::XO player);
 
 #endif /* MINIMAX_H_ */

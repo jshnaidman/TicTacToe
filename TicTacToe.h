@@ -21,18 +21,20 @@
 #include <vector>
 using namespace std;
 
-enum XO {
-	O=79,
-	X=88,
-	z = 90};
 
 class TicTacToe{
 
+
 public:
+	enum XO {
+		O=79,
+		X=88,
+		z = 90};
 	TicTacToe();
 	XO playGame();
 	vector< vector<XO> > board;
 	XO winner(vector<vector <XO> > board);
+
 private:
 	XO playerOne;
 	XO playerTwo;

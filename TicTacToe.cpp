@@ -11,17 +11,17 @@
 
 
 
-TicTacToe::TicTacToe(): playerOne(XO::z), playerTwo(XO::z) {
+TicTacToe::TicTacToe(): playerOne(TicTacToe::XO::z), playerTwo(TicTacToe::XO::z) {
 	for (int i = 0; i<3;i++){
 		for(int j=0;j<3;j++){
-			this->board[i][j] = XO::z;
+			this->board[i][j] = TicTacToe::XO::z;
 		}
 	}
 }
 
 //place X or O on board
-void TicTacToe::place(XO player, vector<int> pos){
-	if(this->board[pos[0]][pos[1]] != XO::z){
+void TicTacToe::place(TicTacToe::XO player, vector<int> pos){
+	if(this->board[pos[0]][pos[1]] != TicTacToe::XO::z){
 		cout << "\n Place taken, try again";
 		this->place(player,pos);
 	}
@@ -30,7 +30,7 @@ void TicTacToe::place(XO player, vector<int> pos){
 
 //evalautes who won the game, X or O.
 //if nobody has won, then z is returned.
-XO TicTacToe::winner(vector< vector<XO> > board){
+TicTacToe::XO TicTacToe::winner(vector< vector<TicTacToe::XO> > board){
 	//if diagonals are thought of as a linear equations on a graph,
 	//pDiagonalCount looks like a diagonal with a positive slope
 	//nDiagonalCount looks like a diagonal with a negative slope
@@ -42,13 +42,13 @@ XO TicTacToe::winner(vector< vector<XO> > board){
 		//each iteration of i will scan a new row and column simultaneously
 		//if two adjacent spots in a column or a row are the same and not empty (equal to z)
 		// then add one to the count of horizontal/vertical matches
-		XO tempHorizontal = board[i][0];
-		XO tempVertical = board[0][i];
+		TicTacToe::XO tempHorizontal = board[i][0];
+		TicTacToe::XO tempVertical = board[0][i];
 		for(int j=1;j<3;j++){
-			if(board[i][j] == tempHorizontal && board[i][j] != XO::z){
+			if(board[i][j] == tempHorizontal && board[i][j] != TicTacToe::XO::z){
 				horizontalCount++;
 			}
-			if (board[j][i] == tempVertical && board[j][i] != XO::z){
+			if (board[j][i] == tempVertical && board[j][i] != TicTacToe::XO::z){
 				verticalCount++;
 			}
 		}
@@ -61,10 +61,10 @@ XO TicTacToe::winner(vector< vector<XO> > board){
 			return board[0][i];
 		}
 		//checks both diagonals for matches
-		if(board[i][2-i] == board[0][2] && board[i][2-i] != XO::z){
+		if(board[i][2-i] == board[0][2] && board[i][2-i] != TicTacToe::XO::z){
 			pDiagonalCount++;
 		}
-		if(board[2-i][i] == board[2][0] && board[2-i][i] != XO::z){
+		if(board[2-i][i] == board[2][0] && board[2-i][i] != TicTacToe::XO::z){
 			nDiagonalCount++;
 		}
 	}
@@ -72,7 +72,7 @@ XO TicTacToe::winner(vector< vector<XO> > board){
 	if(nDiagonalCount == 3 || pDiagonalCount ==3){
 		return board[1][1];
 	}
-	return XO::z;
+	return TicTacToe::XO::z;
 }
 
 vector<int> TicTacToe::receiveInputPosition(){
@@ -99,7 +99,7 @@ vector<int> TicTacToe::receiveInputPosition(){
 	return pos;
 }
 
-XO TicTacToe::pickSymbol(){
+TicTacToe::XO TicTacToe::pickSymbol(){
 	string playerOneSymbol;
 	cout<< "Player one, choose X or O \n";
 	cin>> playerOneSymbol;
@@ -114,9 +114,9 @@ XO TicTacToe::pickSymbol(){
 		return pickSymbol();
 	}
 	if(rawCharChosen == 120 || rawCharChosen == 88){
-		return XO::X;
+		return TicTacToe::XO::X;
 	}
-	else return XO::O;
+	else return TicTacToe::XO::O;
 }
 
 void TicTacToe::printBoard(){
@@ -130,14 +130,14 @@ void TicTacToe::printBoard(){
 }
 
 //playerOne goes first
-XO TicTacToe::playGame(){
-	XO winningPlayer = XO::z; //z is used as default enum value
+TicTacToe::XO TicTacToe::playGame(){
+	TicTacToe::XO winningPlayer = TicTacToe::XO::z; //z is used as default enum value
 	//player one picks X or O
 	playerOne=this->pickSymbol();
-	if(playerOne == XO::X){
-		playerTwo = XO::O;
+	if(playerOne == TicTacToe::XO::X){
+		playerTwo = TicTacToe::XO::O;
 	}
-	else playerTwo = XO::X;
+	else playerTwo = TicTacToe::XO::X;
 	//play 9 turns
 	for(int turn = 1; turn<=9; turn++){
 		this->printBoard();
@@ -149,9 +149,9 @@ XO TicTacToe::playGame(){
 			cout<< "Player Two, please Enter a position you would like to place your piece\n";
 			this->place(playerTwo,receiveInputPosition());
 		}
-		//returns enum XO of player that won, or z if no winner
+		//returns enum TicTacToe::XO of player that won, or z if no winner
 		winningPlayer = this->winner(board);
-		if(winningPlayer != XO::z){
+		if(winningPlayer != TicTacToe::XO::z){
 			printBoard();
 			cout<< "Player " << (char) winningPlayer<< " has won!";
 			return winningPlayer;
