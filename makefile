@@ -1,14 +1,14 @@
 output: MiniMax.o TicTacToe.o PlayGames.o
-	g++ MiniMax.o TicTacToe.o PlayGames.o -o output
+	g++ -std=c++11 MiniMax.o TicTacToe.o PlayGames.o -o output
 
 MiniMax.o: MiniMax.cpp MiniMax.h
-	g++ -c MiniMax.cpp
+	g++ -std=c++11 -c MiniMax.cpp
 
 TicTacToe.o: TicTacToe.cpp TicTacToe.h
-	g++ -c TicTacToe.cpp 
+	g++ -std=c++11 -c TicTacToe.cpp 
 
 PlayGames.o: PlayGames.cpp
-	g++ -c PlayGames.cpp
+	g++ -std=c++11 -c PlayGames.cpp
 
 clean:
 	rm *.o

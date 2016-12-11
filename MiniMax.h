@@ -9,6 +9,7 @@
 #define MINIMAX_H_
 #include "TicTacToe.h"
 
-int utility(TicTacToe game,XO player);
-
-#endif /* MINIMAX_H_ */
+int utility(TicTacToe *game, XO player);
+int max(TicTacToe game); //returns the max value of a state
+int min(TicTacToe game); //returns the min value of a state
+#endif			 /* MINIMAX_H_ */

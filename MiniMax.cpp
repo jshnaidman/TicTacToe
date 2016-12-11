@@ -7,14 +7,18 @@
 
 #include "MiniMax.h"
 
-int utility(TicTacToe game,XO player){
-	XO winningPlayer;
-	winningPlayer = game.winner(game.board);
-	if (winningPlayer == z){
-		return 0;
-	}
-	else if (winningPlayer == player){
-		return 1;
-	}
-	else return -1;
+int utility(TicTacToe *game, XO player)
+{
+    XO winningPlayer;
+    winningPlayer = game->winner(game->board);
+    if (winningPlayer == z)
+    {
+	return 0;
+    }
+    else if (winningPlayer == player)
+    {
+	return 1;
+    }
+    else
+	return -1;
 }
