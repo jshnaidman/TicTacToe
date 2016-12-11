@@ -9,13 +9,13 @@
 #include "TicTacToe.h"
 
 
-TicTacToe::TicTacToe(): playerOne(XO::z), playerTwo(XO::z), board(3, vector<XO>(3, z)) {
+TicTacToe::TicTacToe(): playerOne(z), playerTwo(z), board(3, vector<XO>(3, z)) {
 	
 }
 
 //place X or O on board
 void TicTacToe::place(XO player, vector<int> pos){
-	if(this->board[pos[0]][pos[1]] != XO::z){
+	if(this->board[pos[0]][pos[1]] != z){
 		cout << "\n Place taken, try again";
 		this->place(player,pos);
 	}
@@ -39,10 +39,10 @@ XO TicTacToe::winner(vector< vector<XO> > board){
 		XO tempHorizontal = board[i][0];
 		XO tempVertical = board[0][i];
 		for(int j=1;j<3;j++){
-			if(board[i][j] == tempHorizontal && board[i][j] != XO::z){
+			if(board[i][j] == tempHorizontal && board[i][j] != z){
 				horizontalCount++;
 			}
-			if (board[j][i] == tempVertical && board[j][i] != XO::z){
+			if (board[j][i] == tempVertical && board[j][i] != z){
 				verticalCount++;
 			}
 		}
@@ -55,10 +55,10 @@ XO TicTacToe::winner(vector< vector<XO> > board){
 			return board[0][i];
 		}
 		//checks both diagonals for matches
-		if(board[i][2-i] == board[0][2] && board[i][2-i] != XO::z){
+		if(board[i][2-i] == board[0][2] && board[i][2-i] != z){
 			pDiagonalCount++;
 		}
-		if(board[2-i][i] == board[2][0] && board[2-i][i] != XO::z){
+		if(board[2-i][i] == board[2][0] && board[2-i][i] != z){
 			nDiagonalCount++;
 		}
 	}
@@ -66,7 +66,7 @@ XO TicTacToe::winner(vector< vector<XO> > board){
 	if(nDiagonalCount == 3 || pDiagonalCount ==3){
 		return board[1][1];
 	}
-	return XO::z;
+	return z;
 }
 
 vector<int> TicTacToe::receiveInputPosition(){
@@ -108,9 +108,9 @@ XO TicTacToe::pickSymbol(){
 		return pickSymbol();
 	}
 	if(rawCharChosen == 120 || rawCharChosen == 88){
-		return XO::X;
+		return X;
 	}
-	else return XO::O;
+	else return O;
 }
 
 void TicTacToe::printBoard(){
@@ -125,13 +125,13 @@ void TicTacToe::printBoard(){
 
 //playerOne goes first
 XO TicTacToe::playGame(){
-	XO winningPlayer = XO::z; //z is used as default enum value
+	XO winningPlayer = z; //z is used as default enum value
 	//player one picks X or O
 	playerOne=this->pickSymbol();
-	if(playerOne == XO::X){
-		playerTwo = XO::O;
+	if(playerOne == X){
+		playerTwo = O;
 	}
-	else playerTwo = XO::X;
+	else playerTwo = X;
 	//play 9 turns
 	for(int turn = 1; turn<=9; turn++){
 		this->printBoard();
@@ -145,7 +145,7 @@ XO TicTacToe::playGame(){
 		}
 		//returns enum XO of player that won, or z if no winner
 		winningPlayer = this->winner(board);
-		if(winningPlayer != XO::z){
+		if(winningPlayer != z){
 			printBoard();
 			cout<< "Player " << (char) winningPlayer<< " has won!";
 			return winningPlayer;
