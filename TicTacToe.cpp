@@ -9,14 +9,8 @@
 #include "TicTacToe.h"
 
 
-
-
-TicTacToe::TicTacToe(): playerOne(XO::z), playerTwo(XO::z) {
-	for (int i = 0; i<3;i++){
-		for(int j=0;j<3;j++){
-			this->board[i][j] = XO::z;
-		}
-	}
+TicTacToe::TicTacToe(): playerOne(XO::z), playerTwo(XO::z), board(3, vector<XO>(3, z)) {
+	
 }
 
 //place X or O on board
