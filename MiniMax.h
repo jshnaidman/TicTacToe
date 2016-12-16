@@ -7,9 +7,33 @@
 
 #ifndef MINIMAX_H_
 #define MINIMAX_H_
-#include "TicTacToe.h"
+#include "math.h"
+#include <limits>
+#include <vector>
+#include "XO.h"
 
-int utility(TicTacToe *game, XO player);
-int max(TicTacToe game); //returns the max value of a state
-int min(TicTacToe game); //returns the min value of a state
-#endif			 /* MINIMAX_H_ */
+using namespace std;
+
+class TicTacToe;
+
+struct Action
+{
+    vector<int> position;
+    XO symbol;
+    Action(vector<int> position, XO symbol);
+    Action();
+};
+
+class MiniMax
+{
+  public:
+    static XO isTerminal(vector<vector<XO>> board); //method returns the winner or false if it is not a terminal state.
+    static int utility(XO winner, XO player);
+    static vector<vector<XO>> result(Action action, vector<vector<XO>> board);
+    static int maxValue(vector<vector<XO>> board, XO player);	//returns the max value of a state
+    static int minValue(vector<vector<XO>> board, XO player);	//returns the min value of a state
+    static vector<int> miniMax(vector<vector<XO>> board, XO player); //returns a pair of coordinates x,y that represent the best move for player
+    static vector<vector<int>> successors(vector<vector<XO>> board);
+    static XO other(XO player);
+};
+#endif /* MINIMAX_H_ */
