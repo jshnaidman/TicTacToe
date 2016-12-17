@@ -11,16 +11,16 @@
 #include <limits>
 #include <vector>
 #include "XO.h"
+#include "TicTacToe.h"
 
 using namespace std;
 
-class TicTacToe;
 
 struct Action
 {
     vector<int> position;
-    XO symbol;
-    Action(vector<int> position, XO symbol);
+    XO player;
+    Action(vector<int> position, XO player);
     Action();
 };
 

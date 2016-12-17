@@ -6,16 +6,17 @@
  *      Author: jshnaidman
  */
 
-#ifndef TICTACTOE_H_
-#define TICTACTOE_H_
+#ifndef TICTACTOE_H
+#define TICTACTOE_H
 
 #include <iostream>
 #include <string>
 #include <vector>
-#include "MiniMax.h"
 #include "XO.h"
 
 using namespace std;
+
+class MiniMax;
 
 class TicTacToe
 {

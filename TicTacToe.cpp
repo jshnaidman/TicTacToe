@@ -7,6 +7,7 @@
 //============================================================================
 
 #include "TicTacToe.h"
+#include "MiniMax.h"
 
 TicTacToe::TicTacToe() : playerOne(z), playerTwo(z), board(3, vector<XO>(3, z))
 {
@@ -154,12 +155,12 @@ XO TicTacToe::pickSymbol()
 bool TicTacToe::promptComputerEnabled()
 {
     cout << "Would you like to play against the computer? (y/n)";
-    string decision;
+    string decision; 
     cin >> decision;
 
-    if (decision.length() > 1 || decision.at(0) != 'y' || decision.at(0) != 'n')
+    if ( (char) decision.at(0) != 'y' && (char) decision.at(0) != 'n')
     {
-        cout << "Decision must be y/n";
+        cout << "Decision must be y/n \n";
         return promptComputerEnabled();
     }
 
@@ -247,9 +248,10 @@ XO TicTacToe::playGame()
     //play 9 turns
     for (int turnNum = 1; turnNum <= 9; turnNum++)
     {
+        XO winningPlayer;
         if (!computerEnabled)
         {
-            XO winningPlayer = playTurn();
+            winningPlayer = playTurn();
         }
         else
         {
@@ -265,10 +267,17 @@ XO TicTacToe::playGame()
         if (winningPlayer != z)
         {
             printBoard();
-            cout << "\n Player " << (char)winningPlayer << " has won!\n";
+            if(winningPlayer == playerOne){
+                cout << "\n Player One has won!\n";
+            }
+            else{
+                cout << "\n Player Two has won!\n";
+            }
             return winningPlayer;
         }
     }
+    cout << "Tie game!\n";
+    return winningPlayer;
 }
 
 XO TicTacToe::getTurn()

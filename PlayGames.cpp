@@ -8,8 +8,7 @@
 #include "MiniMax.h"
 
 int main() {
-	vector < vector < XO >> board =  { {z, z, z},  {z, X, O},  {z, z, z}}; 
-	vector < int > bestMove = MiniMax::miniMax(board, X); 
-	printf("\nbest move is: %d,%d\n", bestMove[0], bestMove[1]); 
+	TicTacToe game;
+	game.playGame();
 	return 0; 
-}
+}  
