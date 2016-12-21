@@ -42,7 +42,7 @@ private:
   void place(XO player, vector<int> pos);
   vector<int> receiveInputPosition(int attempt);
   XO pickSymbol();
-  bool promptComputerEnabled();
+  int promptComputerEnabled();
   bool isPositionTaken(int row, int col);
 };
 #endif /* TICTACTOE_H_ */

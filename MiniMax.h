@@ -8,6 +8,7 @@
 #ifndef MINIMAX_H_
 #define MINIMAX_H_
 #include "math.h"
+#include <stdlib.h>
 #include <limits>
 #include <vector>
 #include "XO.h"
