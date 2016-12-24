@@ -1,15 +1,19 @@
-CXX=g++
-CPPFLAGS=-std=c++11 -c -g -Wall
-Objects=MiniMax.o TicTacToe.o PlayGames.o
+OBJ = TicTacToe.o MiniMax.o
+CPPFLAGS = -std=c++14 -g -O0
+all: TTT
+CXX = g++
 
-output: MiniMax.o TicTacToe.o PlayGames.o
-	$(CXX) $(Objects) -o output
+TTT: $(OBJ)
+		$(CXX) $(CPPFLAGS) $(OBJ) PlayGames.cpp -o output
 
-MiniMax.o: MiniMax.cpp MiniMax.h XO.h
+%.o: %.cpp 
+		$(CXX) -c $(CPPFLAGS) $< -o $@
 
-TicTacToe.o: TicTacToe.cpp TicTacToe.h XO.h
+TicTacToe.o: TicTacToe.h TicTacToe.cpp XO.h
+		$(CXX) -c $(CPPFLAGS) TicTacToe.cpp -o $@
 
-PlayGames.o: PlayGames.cpp
+MiniMax.o: MiniMax.h MiniMax.cpp XO.h
+		$(CXX) -c $(CPPFLAGS) MiniMax.cpp -o $@
 
-clean:
-	rm *.o
+clean: 
+		rm *.o

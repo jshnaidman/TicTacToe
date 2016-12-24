@@ -1,17 +1,11 @@
-/*
- * TicTacToe.h
- *
- *  Created on: Nov 4, 2016
- *  Last Edit: Dec 11, 2016
- *      Author: jshnaidman
- */
-
 #ifndef TICTACTOE_H
 #define TICTACTOE_H
 
 #include <iostream>
 #include <string>
 #include <vector>
+#include <ctime>
+#include <cstdlib>
 #include "XO.h"
 
 using namespace std;

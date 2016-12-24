@@ -1,9 +1,3 @@
-/*
- * PlayGames.cpp
- *
- *  Created on: Nov 5, 2016
- *      Author: jshnaidman
- */
 #include "TicTacToe.h"
 #include "MiniMax.h"
 

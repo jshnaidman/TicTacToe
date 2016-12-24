@@ -1,16 +1,9 @@
-//============================================================================
-// Name        : TicTacToe.cpp
-// Author      : Jacob Shnaidman
-// Version     :
-// Copyright   : Steal this as much as you want
-// Description : Hello World in C++, Ansi-style
-//============================================================================
-
 #include "TicTacToe.h"
 #include "MiniMax.h"
 
 TicTacToe::TicTacToe() : playerOne(z), playerTwo(z), board(3, vector<XO>(3, z))
 {
+    turn = &playerOne;
 }
 
 //place X or O on board
@@ -20,9 +13,10 @@ void TicTacToe::place(XO player, vector<int> pos)
     {
         cout << "\n Place taken, try again";
         this->place(player, pos);
+        return;
     }
     this->board[pos[0]][pos[1]] = player;
-};
+}
 
 //evalautes who won the game, X or O.
 //if nobody has won, then z is returned.
@@ -85,7 +79,7 @@ XO TicTacToe::winner(vector<vector<XO>> board)
 //every 3rd attempt reprints the board
 vector<int> TicTacToe::receiveInputPosition(int attempt)
 {
-    string posString;
+    string posString = "";
     if (attempt % 3 == 0)
     {
         this->printBoard();
@@ -130,7 +124,7 @@ bool TicTacToe::isPositionTaken(int row, int col)
 //allows user to pick X or O at beginning of game
 XO TicTacToe::pickSymbol()
 {
-    string playerOneSymbol;
+    string playerOneSymbol = "";
     cout << "Player one, choose X or O \n"
          << "\nX goes first\n";
     cin >> playerOneSymbol;
@@ -160,22 +154,24 @@ XO TicTacToe::pickSymbol()
 int TicTacToe::promptComputerEnabled()
 {
     cout << "Would you like to play against the computer? (y/n/c)";
-    string decision;
-    cin >> decision;
+    string response = "";
+    cin >> response;
 
-    if ((char)decision.at(0) != 'y' && (char)decision.at(0) != 'n' && decision.at(0) != 'c')
+    if (response.at(0) != 'y' && response.at(0) != 'n' && response.at(0) != 'c')
     {
         cout << "Decision must be y/n \n";
         return promptComputerEnabled();
     }
 
-    if (decision.at(0) == 'y')
+    if (response.at(0) == 'y')
     {
         cout << "Player Two is the Computer\n";
         return 1;
     }
-    else if (decision.at(0) == 'n')
+    else if (response.at(0) == 'n')
+    {
         return 0;
+    }
     else
     {
         return -1;
@@ -202,7 +198,7 @@ XO TicTacToe::playTurn()
 {
     this->printBoard();
     bool isPlayerOne = false;
-    if (&(*turn) == &playerOne)
+    if (&(*(this->turn)) == &playerOne)
     {
         isPlayerOne = true;
         cout << "Player One, please Enter a position you would like to place your piece\n";
@@ -216,11 +212,12 @@ XO TicTacToe::playTurn()
     //decide who goes next
     if (isPlayerOne)
     {
-        turn = &playerTwo;
+        this->turn = &playerTwo;
     }
     else
+    {
         turn = &playerOne;
-
+    }
     //returns enum XO of player that won, or z if no winner
     XO winningPlayer = this->winner(board);
     return winningPlayer;
@@ -229,19 +226,19 @@ XO TicTacToe::playTurn()
 //plays the best move for playerTwo
 XO TicTacToe::compTurn()
 {
-    XO player = *turn;
-    vector<int> move = MiniMax::miniMax(board, player); //find best move
-    this->place(player, move);                          //enter move onto board
-    XO winningPlayer = this->winner(board);             //determine if anyone's won
+    XO player = *(this->turn);
+    vector<int> move = MiniMax::miniMax(board, true, player); //find best move
+    this->place(player, move);                                //enter move onto board
+    XO winningPlayer = this->winner(board);                   //determine if anyone's won
 
     //change turns
-    if (&(*turn) == &playerOne)
+    if (&(*(this->turn)) == &playerOne)
     {
-        turn = &playerTwo;
+        this->turn = &playerTwo;
     }
     else
     {
-        turn = &playerOne;
+        this->turn = &playerOne;
     }
     return winningPlayer;
 }
@@ -250,21 +247,21 @@ XO TicTacToe::compTurn()
 XO TicTacToe::playGame()
 {
     XO winningPlayer = z; //z is used as default enum value
-    int turnNum = 1;       //start at first turn
-        //decide if you want to play against the computer
-        int computerEnabled = TicTacToe::promptComputerEnabled();
-    //player one picks X or O
+    int turnNum = 1;      //start at first turn
+    //decide if you want to play against the computer
+    int computerEnabled = TicTacToe::promptComputerEnabled();
+    //player one picks X or O if it's not computer vs computer
     if (computerEnabled != -1)
     {
         playerOne = this->pickSymbol();
         if (playerOne == X)
         {
-            turn = &playerOne;
+            this->turn = &playerOne;
             playerTwo = O;
         }
         else
         {
-            turn = &playerTwo;
+            this->turn = &playerTwo;
             playerTwo = X;
         }
     }
@@ -272,29 +269,29 @@ XO TicTacToe::playGame()
     {
         playerOne = X;
         playerTwo = O;
-        srand (time(NULL));
-        int firstMove = rand() % 9 + 1;
+        this->turn = &playerTwo;
+        srand(time(0));
+        int firstMove = rand() % 9;
         cout << firstMove;
-        int row = firstMove % 3;
-        int col = 9-row*3;
+        int row = firstMove / 3;
+        int col = firstMove % 3;
         this->board[row][col] = X;
-        turn = &playerTwo;
+        this->printBoard();
         turnNum++;
     }
 
     //play 9 turns
-    for (turnNum; turnNum <= 9; turnNum++)
+    for (; turnNum <= 9; turnNum++)
     {
-        XO winningPlayer;
         //if computer is enabled
-        if (computerEnabled == 1)
+        if (computerEnabled == 0)
         {
             winningPlayer = playTurn();
         }
         //if computer is disabled
-        else if (computerEnabled == 0)
+        else if (computerEnabled == 1)
         {
-            if (&(*turn) == &playerOne)
+            if (&(*(this->turn)) == &playerOne)
             {
                 winningPlayer = playTurn();
             }
@@ -308,6 +305,7 @@ XO TicTacToe::playGame()
         else
         {
             winningPlayer = compTurn();
+            printBoard();
         }
         if (winningPlayer != z) //if it's not equal to z there's a winner
         {
@@ -318,11 +316,11 @@ XO TicTacToe::playGame()
     printBoard();
     if (winningPlayer == playerOne)
     {
-        cout << "\n Player One has won!\n";
+        cout << "\nPlayer One has won!\n";
     }
     else if (winningPlayer == playerTwo)
     {
-        cout << "\n Player Two has won!\n";
+        cout << "\nPlayer Two has won!\n";
     }
     else
     {
@@ -333,7 +331,7 @@ XO TicTacToe::playGame()
 
 XO TicTacToe::getTurn()
 {
-    return *turn;
+    return *(this->turn);
 }
 
 vector<vector<XO>> TicTacToe::getBoard()
