@@ -1,6 +1,7 @@
 # TicTacToe
 
-This is a project to teach myself the basics of object oriented C++ programming in addition to the miniMax algorithm.
+This is a game of TicTacToe that can be played on the terminal
 
+You can play against a friend, against the computer, or see the computer play against itself.
 
-The goal is to create an unbeatable game of tic tac toe.
+The computer uses the MiniMax algorithm to ensure that it always picks the best move possible
